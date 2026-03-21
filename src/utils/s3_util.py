@@ -35,9 +35,10 @@ class S3Util:
             print("Bucket " + self.S3_BUCKET_NAME + " already exists.")
 
     def upload_file_to_s3(self, file_name, data, content_type):
-        self.s3_client.put_object(
+        s3_response = self.s3_client.put_object(
             Bucket=self.S3_BUCKET_NAME,
             Key=file_name,
             Body=data,
             ContentType=content_type,
         )
+        return s3_response
