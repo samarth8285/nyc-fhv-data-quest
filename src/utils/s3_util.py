@@ -18,6 +18,9 @@ class S3Util:
             region_name=self.AWS_REGION,
         )
 
+    def get_s3_client(self):
+        return self.s3_client
+
     def check_s3_bucket_exists(self):
         try:
             self.s3_client.head_bucket(Bucket=self.S3_BUCKET_NAME)

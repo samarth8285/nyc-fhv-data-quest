@@ -25,7 +25,7 @@ def load_raw_data_to_s3():
     s3_util.create_s3_bucket()
 
     s3_response = s3_util.upload_file_to_s3(
-        file_name="raw/fhv_raw_data.json",
+        file_name=os.getenv("RAW_FILE_NAME"),
         data=json.dumps(response),
         content_type="application/json",
     )
