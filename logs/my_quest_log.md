@@ -27,3 +27,8 @@
 >
 > 1. Researched about structuring the files and folders for the project.
 > 2. Created tasks to be performed tomorrow.
+
+> Actions taken on 29th March 2026
+>
+> 1. Modularized code such that functions only perfrom one task at a time.
+> 2. Created aws_client.py file to create clients only.

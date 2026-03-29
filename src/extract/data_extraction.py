@@ -4,9 +4,9 @@ from datetime import datetime
 from src.utils.s3_util import create_s3_bucket, upload_file_to_s3
 
 
-def extract_data_from_api(API_URL, API_KEY, API_SECRET):
+def extract_data_from_api(api_url, api_key, api_secret):
     print("Extracting data from API...")
-    response = requests.get(API_URL, auth=(API_KEY, API_SECRET))
+    response = requests.get(api_url, auth=(api_key, api_secret))
     if response.status_code == 200:
         print("Data extracted successfully from API.")
         return response.json()
@@ -17,19 +17,19 @@ def extract_data_from_api(API_URL, API_KEY, API_SECRET):
         }
 
 
-def load_raw_data_to_s3(S3_CLIENT, AWS_BUCKET_NAME, api_data, raw_file_name):
+def load_raw_data_to_s3(s3_client, bucket_name, api_data, raw_file_name):
 
     if "error" in api_data:
         print("Skipping S3 upload due to API extraction error.")
         print(f"API Error: {api_data['error']}")
         return
 
-    create_s3_bucket(S3_CLIENT, AWS_BUCKET_NAME)
+    create_s3_bucket(s3_client, bucket_name)
 
     print("Uploading data to S3...")
     s3_response = upload_file_to_s3(
-        S3_CLIENT,
-        AWS_BUCKET_NAME,
+        s3_client,
+        bucket_name,
         file_name=raw_file_name,
         data=json.dumps(api_data),
         content_type="application/json",
