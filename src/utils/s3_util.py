@@ -1,47 +1,34 @@
-import boto3
 from botocore.exceptions import ClientError
-import os
-from dotenv import load_dotenv
 
 
-class S3Util:
-    def __init__(self):
-        load_dotenv()
-        self.AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY")
-        self.AWS_SECRET_ACCESS_KEY = os.getenv("AWS_ACCESS_SECRET")
-        self.AWS_REGION = os.getenv("AWS_REGION")
-        self.S3_BUCKET_NAME = os.getenv("S3_BUCKET_NAME")
-        self.s3_client = boto3.client(
-            "s3",
-            aws_access_key_id=self.AWS_ACCESS_KEY_ID,
-            aws_secret_access_key=self.AWS_SECRET_ACCESS_KEY,
-            region_name=self.AWS_REGION,
-        )
+def check_s3_bucket_exists(s3_client, bucket_name):
+    try:
+        s3_client.head_bucket(Bucket=bucket_name)
+        return True
+    except ClientError:
+        print(f"There is no {bucket_name} bucket in S3.")
+        return False
 
-    def get_s3_client(self):
-        return self.s3_client
 
-    def check_s3_bucket_exists(self):
-        try:
-            self.s3_client.head_bucket(Bucket=self.S3_BUCKET_NAME)
-            return True
-        except ClientError:
-            print("There is no bucket with the name " + self.S3_BUCKET_NAME)
-            return False
+def create_s3_bucket(s3_client, bucket_name):
+    if not check_s3_bucket_exists(s3_client, bucket_name):
+        s3_client.create_bucket(Bucket=bucket_name)
+        print(f"Bucket {bucket_name} created successfully.")
+    else:
+        print(f"Bucket {bucket_name} already exists.")
 
-    def create_s3_bucket(self):
 
-        if not self.check_s3_bucket_exists():
-            self.s3_client.create_bucket(Bucket=self.S3_BUCKET_NAME)
-            print("Bucket " + self.S3_BUCKET_NAME + " created successfully.")
-        else:
-            print("Bucket " + self.S3_BUCKET_NAME + " already exists.")
-
-    def upload_file_to_s3(self, file_name, data, content_type):
-        s3_response = self.s3_client.put_object(
-            Bucket=self.S3_BUCKET_NAME,
+def upload_file_to_s3(s3_client, bucket_name, file_name, data, content_type):
+    try:
+        s3_client.put_object(
+            Bucket=bucket_name,
             Key=file_name,
             Body=data,
             ContentType=content_type,
         )
-        return s3_response
+        print(f"File {file_name} uploaded successfully to bucket {bucket_name}.")
+        return True
+
+    except ClientError as e:
+        print(f"Failed to upload file {file_name} to bucket {bucket_name}. Error: {e}")
+        return False
