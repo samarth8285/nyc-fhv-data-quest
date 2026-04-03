@@ -2,7 +2,7 @@ import zipfile
 import os
 
 INCLUDE_PATHS = ["lambda/ingestion_lambda/", "src/", "development/"]
-EXCLUDE_FILES = ["zipper.py", "data_explore.ipynb"]
+EXCLUDE_FILES = ["zipper.py", "data_explore.ipynb", "iam_manager.py"]
 
 
 def create_zip(zip_path="build/function.zip"):

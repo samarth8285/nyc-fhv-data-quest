@@ -17,3 +17,33 @@ def get_s3_client():
         region_name=AWS_REGION,
     )
     return s3_client
+
+
+def get_iam_client():
+    iam_client = boto3.client(
+        "iam",
+        aws_access_key_id=AWS_ACCESS_KEY_ID,
+        aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
+        region_name=AWS_REGION,
+    )
+    return iam_client
+
+
+def get_lambda_client():
+    lambda_client = boto3.client(
+        "lambda",
+        aws_access_key_id=AWS_ACCESS_KEY_ID,
+        aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
+        region_name=AWS_REGION,
+    )
+    return lambda_client
+
+
+def get_events_client():
+    events_client = boto3.client(
+        "events",
+        aws_access_key_id=AWS_ACCESS_KEY_ID,
+        aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
+        region_name=AWS_REGION,
+    )
+    return events_client
