@@ -32,3 +32,10 @@
 >
 > 1. Modularized code such that functions only perfrom one task at a time.
 > 2. Created aws_client.py file to create clients only.
+
+> Actions taken on 3rd April 2026
+>
+> 1. Created functions to create clients for AWS services in aws_client.py file.
+> 2. Created a function to zip all the code files in a folder to upload it to lambda function.
+> 3. Created a function to create IAM role for lambda function.
+> 4. Updated the YAML file to have SHA value for sonar cloud version instead of version number to avoid any issues with version updates in the future.
