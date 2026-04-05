@@ -1,6 +1,5 @@
 import requests
 import json
-from datetime import datetime
 from src.utils.s3_util import create_s3_bucket, upload_file_to_s3
 
 
@@ -22,7 +21,7 @@ def load_raw_data_to_s3(s3_client, bucket_name, api_data, raw_file_name):
     if "error" in api_data:
         print("Skipping S3 upload due to API extraction error.")
         print(f"API Error: {api_data['error']}")
-        return
+        return {"error": api_data["error"]}
 
     create_s3_bucket(s3_client, bucket_name)
 

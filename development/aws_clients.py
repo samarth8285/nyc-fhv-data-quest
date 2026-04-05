@@ -39,11 +39,11 @@ def get_lambda_client():
     return lambda_client
 
 
-def get_events_client():
-    events_client = boto3.client(
+def get_events_manager_client():
+    events_manager_client = boto3.client(
         "events",
         aws_access_key_id=AWS_ACCESS_KEY_ID,
         aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
         region_name=AWS_REGION,
     )
-    return events_client
+    return events_manager_client
