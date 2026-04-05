@@ -1,6 +1,6 @@
 import time
 import json
-from development.aws_clients import get_iam_client
+from src.utils.aws_clients import get_iam_client
 
 ROLE_NAME = "My-Data-Quest-LambdaExecutionRole"
 

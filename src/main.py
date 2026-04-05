@@ -18,9 +18,3 @@
 # if __name__ == "__main__":
 #     api_data = extract_data_from_api(API_URL, API_KEY, API_SECRET)
 #     load_raw_data_to_s3(S3_CLIENT, BUCKET_NAME, api_data, RAW_FILE_NAME)
-
-from development.iam_manager import get_iam_role_arn
-
-if __name__ == "__main__":
-    role_arn = get_iam_role_arn()
-    print(f"IAM Role ARN: {role_arn}")

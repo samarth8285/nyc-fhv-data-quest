@@ -39,3 +39,13 @@
 > 2. Created a function to zip all the code files in a folder to upload it to lambda function.
 > 3. Created a function to create IAM role for lambda function.
 > 4. Updated the YAML file to have SHA value for sonar cloud version instead of version number to avoid any issues with version updates in the future.
+
+> Actions taken on 5th April 2026
+>
+> 1. Uploaded the API auth credentials to AWS secrets manager.
+> 2. Created a function to retrieve the API auth credentials from AWS secrets manager.
+> 3. Created a config.json file to store all the configuration values for the extraction process.
+> 4. Moved the Dockerfile to lambda_ingestion folder and updated it to copy the code files from the src folder to the container.
+> 5. Moved the aws_client.py file to the src folder and updated the import statements in the code files accordingly.
+> 6. Configured the Dockerfile to install the necessary dependencies in the container for the application to run correctly inside lambda function.
+> 7. Configured the AWS CLI with the necessary credentials to allow the application to interact with AWS services.
