@@ -49,3 +49,8 @@
 > 5. Moved the aws_client.py file to the src folder and updated the import statements in the code files accordingly.
 > 6. Configured the Dockerfile to install the necessary dependencies in the container for the application to run correctly inside lambda function.
 > 7. Configured the AWS CLI with the necessary credentials to allow the application to interact with AWS services.
+
+> Actions on 12th April 2026
+>
+> 1. Created functions to authenticate docker with AWS ECR and push the docker image to ECR repository.
+> 2. Tested the functions to ensure that the docker image is successfully pushed to ECR repository.
