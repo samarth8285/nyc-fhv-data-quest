@@ -32,3 +32,8 @@ def get_events_manager_client():
 def get_secrets_manager_client():
     secrets_manager_client = boto3.client("secretsmanager")
     return secrets_manager_client
+
+
+def get_ecr_client():
+    ecr_client = boto3.client("ecr")
+    return ecr_client
