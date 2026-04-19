@@ -1,10 +1,22 @@
 from src.utils.aws_clients import get_ecr_client
 import base64
 import subprocess
+import json
 
 
 def get_ecr_repository_uri(repository_name):
     ecr_client = get_ecr_client()
+    policy = {
+        "Version": "2012-10-17",
+        "Statement": [
+            {
+                "Sid": "LambdaECRImageRetrievalPolicy",
+                "Effect": "Allow",
+                "Principal": {"Service": "lambda.amazonaws.com"},
+                "Action": ["ecr:BatchGetImage", "ecr:GetDownloadUrlForLayer"],
+            }
+        ],
+    }
 
     try:
         response = ecr_client.describe_repositories(repositoryNames=[repository_name])
@@ -17,6 +29,9 @@ def get_ecr_repository_uri(repository_name):
             repositoryName=repository_name,
             imageTagMutability="MUTABLE",
             imageScanningConfiguration={"scanOnPush": True},
+        )
+        ecr_client.set_repository_policy(
+            repositoryName=repository_name, policyText=json.dumps(policy)
         )
         repository_uri = response["repository"]["repositoryUri"]
         return repository_uri

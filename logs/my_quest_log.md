@@ -54,3 +54,8 @@
 >
 > 1. Created functions to authenticate docker with AWS ECR and push the docker image to ECR repository.
 > 2. Tested the functions to ensure that the docker image is successfully pushed to ECR repository.
+
+> Actions on 19th April 2026
+>
+> 1. Added permissions to the ECR repository policy to allow the lambda function to pull the docker image from ECR repository.
+> 2. Created a function to perform all the necessary steps to create an ECR repository and push the docker image to it.
