@@ -15,7 +15,7 @@ def get_ecr_repository_uri(repository_name):
         print("ECR Repository not found. Creating a new repository...")
         response = ecr_client.create_repository(
             repositoryName=repository_name,
-            imageTagMutability="MUTABLE",  # or IMMUTABLE
+            imageTagMutability="MUTABLE",
             imageScanningConfiguration={"scanOnPush": True},
         )
         repository_uri = response["repository"]["repositoryUri"]
@@ -35,6 +35,7 @@ def authenticate_ecr_to_docker():
         check=True,
         capture_output=True,
         text=True,
+        encoding="utf-8",
     )
 
     return login_result.stdout
@@ -42,7 +43,7 @@ def authenticate_ecr_to_docker():
 
 def build_and_push_docker_image(repository_uri, docker_file_location, image_tag):
     try:
-        docker_build_result = subprocess.run(
+        subprocess.run(
             [
                 "docker",
                 "build",
@@ -55,6 +56,7 @@ def build_and_push_docker_image(repository_uri, docker_file_location, image_tag)
             check=True,
             capture_output=True,
             text=True,
+            encoding="utf-8",
         )
         print("Docker image built successfully.")
 
@@ -62,12 +64,25 @@ def build_and_push_docker_image(repository_uri, docker_file_location, image_tag)
         return f"Error building Docker image: {e.stderr}"
 
     try:
-        docker_push_result = subprocess.run(
+        subprocess.run(
             ["docker", "push", f"{repository_uri}:{image_tag}"],
             check=True,
             capture_output=True,
             text=True,
+            encoding="utf-8",
         )
         print("Docker image pushed successfully.")
     except subprocess.CalledProcessError as e:
         return f"Error pushing Docker image: {e.stderr}"
+
+
+def deploy_docker_image_to_ecr(repository_name, docker_file_location, image_tag):
+    print("Getting ECR repository URI...")
+    repository_uri = get_ecr_repository_uri(repository_name)
+    print(f"ECR Repository URI: {repository_uri}")
+    print("Authenticating Docker to ECR...")
+    auth_output = authenticate_ecr_to_docker()
+    print(auth_output)
+    print("Building and pushing Docker image to ECR...")
+    build_and_push_docker_image(repository_uri, docker_file_location, image_tag)
+    return f"{repository_uri}:{image_tag}"

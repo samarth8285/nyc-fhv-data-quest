@@ -20,24 +20,14 @@
 #     load_raw_data_to_s3(S3_CLIENT, BUCKET_NAME, api_data, RAW_FILE_NAME)
 
 import json
-from development.ecr_manager import (
-    get_ecr_repository_uri,
-    authenticate_ecr_to_docker,
-    build_and_push_docker_image,
-)
+from development.ecr_manager import deploy_docker_image_to_ecr
 
 with open("src/extract/config.json") as f:
     config = json.load(f)
 
 if __name__ == "__main__":
-    print("Getting ECR repository URI...")
-    repository_uri = get_ecr_repository_uri(config["ECR_REPOSITORY_NAME"])
-    print(f"ECR Repository URI: {repository_uri}")
-    print("Authenticating Docker to ECR...")
-    auth_output = authenticate_ecr_to_docker()
-    print(auth_output)
-    print("Building and pushing Docker image to ECR...")
-    build_and_push_docker_image(
-        repository_uri, config["DOCKER_FILE_LOCATION"], config["IMAGE_TAG"]
+    image_uri = deploy_docker_image_to_ecr(
+        config["ECR_REPOSITORY_NAME"],
+        config["DOCKER_FILE_LOCATION"],
+        config["IMAGE_TAG"],
     )
-

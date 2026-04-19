@@ -4,6 +4,6 @@
     "RAW_FILE_NAME": "bronze/fhv_raw_data",
     "SECRET_NAME": "NYC_FHV_API_AUTH",
     "ECR_REPOSITORY_NAME": "fhv-ecr-repository",
-    "DOCKER_FILE_LOCATION": "development/Dockerfile",
+    "DOCKER_FILE_LOCATION": "development/ingestion/Dockerfile",
     "IMAGE_TAG": "latest"
 }
