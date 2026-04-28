@@ -1,0 +1,9 @@
+{
+    "SECRET_NAME": "NYC_FHV_API_AUTH",
+    "ECR_REPOSITORY_NAME": "fhv-ecr-repository",
+    "DOCKER_FILE_LOCATION": "development/Dockerfile",
+    "IMAGE_TAG": "latest",
+    "S3_BUCKET_NAME": "nyc-fhv-data",
+    "LAMBDA_FUNCTION_NAME": "fhv-data-extractor",
+    "LAMBDA_EXECUTION_ROLE": "My-Data-Quest-LambdaExecutionRole"
+}

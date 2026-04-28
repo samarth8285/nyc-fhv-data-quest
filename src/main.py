@@ -19,15 +19,5 @@
 #     api_data = extract_data_from_api(API_URL, API_KEY, API_SECRET)
 #     load_raw_data_to_s3(S3_CLIENT, BUCKET_NAME, api_data, RAW_FILE_NAME)
 
-import json
-from development.ecr_manager import deploy_docker_image_to_ecr
-
-with open("src/extract/config.json") as f:
-    config = json.load(f)
-
-if __name__ == "__main__":
-    image_uri = deploy_docker_image_to_ecr(
-        config["ECR_REPOSITORY_NAME"],
-        config["DOCKER_FILE_LOCATION"],
-        config["IMAGE_TAG"],
-    )
+def extract_api_data():
+    print("Hello world!!")

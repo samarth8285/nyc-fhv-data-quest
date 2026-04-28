@@ -59,3 +59,9 @@
 >
 > 1. Added permissions to the ECR repository policy to allow the lambda function to pull the docker image from ECR repository.
 > 2. Created a function to perform all the necessary steps to create an ECR repository and push the docker image to it.
+
+> Actions on 28th April 2026
+> 1. Created lambda manager file to create and deploy lambda function using the docker image in ECR repository.
+> 2. Created a function to check if the lambda function already exists before creating it to avoid any errors.
+> 3. Tested the lambda manager functions to ensure that the lambda function is successfully created and deployed using the docker image in ECR repository.
+> 4. Updated the lambda handler function to call the main function from the src folder to perform the data extraction and upload process when the lambda function is triggered manually.

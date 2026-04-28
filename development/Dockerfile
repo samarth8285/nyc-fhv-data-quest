@@ -13,4 +13,4 @@ COPY src/ ${LAMBDA_TASK_ROOT}/src/
 
 # Set handler
 # Format: <file>.<function>
-CMD ["lambda_function.handler"]
+CMD ["lambda_function.lambda_handler"]

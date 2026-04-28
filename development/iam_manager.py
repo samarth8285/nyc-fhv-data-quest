@@ -2,10 +2,10 @@ import time
 import json
 from src.utils.aws_clients import get_iam_client
 
-ROLE_NAME = "My-Data-Quest-LambdaExecutionRole"
 
 
-def get_iam_role_arn():
+
+def get_iam_role_arn(role_name):
     iam_client = get_iam_client()
 
     assume_role_policy_document = {
@@ -20,20 +20,20 @@ def get_iam_role_arn():
     }
 
     try:
-        response = iam_client.get_role(RoleName=ROLE_NAME)
-        print(f"IAM Role '{ROLE_NAME}' already exists. Using existing role...")
+        response = iam_client.get_role(RoleName=role_name)
+        print(f"IAM Role '{role_name}' already exists. Using existing role...")
 
     except iam_client.exceptions.NoSuchEntityException:
         response = iam_client.create_role(
-            RoleName=ROLE_NAME,
+            RoleName=role_name,
             AssumeRolePolicyDocument=json.dumps(assume_role_policy_document),
         )
         iam_client.attach_role_policy(
-            RoleName=ROLE_NAME,
+            RoleName=role_name,
             PolicyArn="arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
         )
         print("Waiting for IAM Role to be fully propagated...")
         time.sleep(10)
-        print(f"IAM Role '{ROLE_NAME}' created successfully.")
+        print(f"IAM Role '{role_name}' created successfully.")
 
     return response["Role"]["Arn"]

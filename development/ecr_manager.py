@@ -62,6 +62,9 @@ def build_and_push_docker_image(repository_uri, docker_file_location, image_tag)
             [
                 "docker",
                 "build",
+                "--platform",
+                "linux/amd64",
+                "--provenance=false",
                 "-t",
                 f"{repository_uri}:{image_tag}",
                 "-f",
@@ -91,6 +94,28 @@ def build_and_push_docker_image(repository_uri, docker_file_location, image_tag)
         return f"Error pushing Docker image: {e.stderr}"
 
 
+def delete_untagged_images(repository_name):
+    ecr_client = get_ecr_client()
+    response = ecr_client.list_images(
+        repositoryName=repository_name,
+        filter={"tagStatus": "UNTAGGED"},
+    )
+    untagged_images = response.get("imageIds", [])
+    if not untagged_images:
+        print(f"No untagged images found in ECR repository '{repository_name}'.")
+        return
+
+    for image in untagged_images:
+        ecr_client.batch_delete_image(
+            repositoryName=repository_name,
+            imageIds=[{"imageDigest": image["imageDigest"]}],
+        )
+    print(
+        f"Deleted {len(untagged_images)} untagged images from ECR repository '{repository_name}'."
+    )
+    return
+
+
 def deploy_docker_image_to_ecr(repository_name, docker_file_location, image_tag):
     print("Getting ECR repository URI...")
     repository_uri = get_ecr_repository_uri(repository_name)
@@ -100,4 +125,5 @@ def deploy_docker_image_to_ecr(repository_name, docker_file_location, image_tag)
     print(auth_output)
     print("Building and pushing Docker image to ECR...")
     build_and_push_docker_image(repository_uri, docker_file_location, image_tag)
+    delete_untagged_images(repository_name)
     return f"{repository_uri}:{image_tag}"
