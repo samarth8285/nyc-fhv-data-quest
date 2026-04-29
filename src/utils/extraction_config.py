@@ -1,0 +1,4 @@
+API_URL = "https://data.cityofnewyork.us/api/v3/views/8wbx-tsch/query.json"
+S3_BUCKET_NAME = "nyc-fhv-data"
+RAW_FILE_NAME = "bronze/fhv_raw_data"
+AWS_SECRET_NAME = "NYC_FHV_API_AUTH"

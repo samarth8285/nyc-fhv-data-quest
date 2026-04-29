@@ -65,3 +65,11 @@
 > 2. Created a function to check if the lambda function already exists before creating it to avoid any errors.
 > 3. Tested the lambda manager functions to ensure that the lambda function is successfully created and deployed using the docker image in ECR repository.
 > 4. Updated the lambda handler function to call the main function from the src folder to perform the data extraction and upload process when the lambda function is triggered manually.
+
+> Actions on 29th April 2026
+>
+> 1. Tested the lambda function by triggering it manually to ensure that the data extraction and upload process works correctly when the lambda function is executed.
+> 2. Created a module to deploy the infrastructure of AWS services.
+> 3. Updated docker ignore file to ignore the pycache files and __pycache__ folders to reduce the size of the docker image.
+> 4. Added permissions to the IAM role for lambda function to allow it to access the necessary AWS services for the data extraction and upload process.
+> 5. Converted the config files to python files to avoid any issues with reading the config values in the lambda function when it is deployed.

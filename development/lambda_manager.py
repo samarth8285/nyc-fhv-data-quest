@@ -27,6 +27,7 @@ def create_lambda_function(lambda_function_name, lambda_execution_role, ecr_imag
             PackageType="Image",
             Code={"ImageUri": ecr_image_uri},
             Timeout=300,
+            MemorySize=256,
             Environment={
                 "Variables": {
                     "ENVIRONMENT": "production",

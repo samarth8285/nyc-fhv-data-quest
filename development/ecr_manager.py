@@ -62,6 +62,7 @@ def build_and_push_docker_image(repository_uri, docker_file_location, image_tag)
             [
                 "docker",
                 "build",
+                "--no-cache",
                 "--platform",
                 "linux/amd64",
                 "--provenance=false",
