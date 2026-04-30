@@ -73,3 +73,9 @@
 > 3. Updated docker ignore file to ignore the pycache files and __pycache__ folders to reduce the size of the docker image.
 > 4. Added permissions to the IAM role for lambda function to allow it to access the necessary AWS services for the data extraction and upload process.
 > 5. Converted the config files to python files to avoid any issues with reading the config values in the lambda function when it is deployed.
+
+> Actions on 30th April 2026
+>
+> 1. Created a function module to create event bridge rule to trigger the lambda function on a schedule.
+> 2. Updated the deploy module to call the function to create event bridge rule after creating and deploying the lambda function.
+> 3. Tested the event bridge rule to ensure that it successfully triggers the lambda function on the defined schedule.
