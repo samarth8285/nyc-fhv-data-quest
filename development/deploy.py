@@ -5,7 +5,7 @@ from development.iam_manager import get_iam_role_arn
 from development.eventbridge_manager import get_eventbridge_rule
 
 if __name__ == "__main__":
-    iam_role_arn = get_iam_role_arn(config.LAMBDA_EXECUTION_ROLE)
+    iam_role_arn = get_iam_role_arn(config.LAMBDA_EXECUTION_ROLE)['body']
     image_uri = deploy_docker_image_to_ecr(
         config.ECR_REPOSITORY_NAME,
         config.DOCKER_FILE_LOCATION,
@@ -16,7 +16,7 @@ if __name__ == "__main__":
     )
 
     eventbridge_response = get_eventbridge_rule(
-        config.EVENT_BRIDGE_RULE_NAME, config.LAMBDA_FUNCTION_NAME
+        config.EVENT_BRIDGE_RULE_NAME, config.LAMBDA_FUNCTION_NAME, lambda_creation_response["FunctionArn"]
     )
 
     print("Deployment Summary:")

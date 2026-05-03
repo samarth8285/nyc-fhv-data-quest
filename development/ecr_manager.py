@@ -5,6 +5,17 @@ import json
 
 
 def get_ecr_repository_uri(repository_name):
+    """
+    Check if the ECR repository exists.
+    If it does, return its URI. If not, create it and then return the URI.
+    The repository policy allows Lambda to pull images from this ECR repository.
+
+    Parameters:
+    - repository_name (str): The name of the ECR repository.
+
+    Returns:
+    - str: The URI of the ECR repository.
+    """
     ecr_client = get_ecr_client()
     policy = {
         "Version": "2012-10-17",
@@ -38,6 +49,13 @@ def get_ecr_repository_uri(repository_name):
 
 
 def authenticate_ecr_to_docker():
+    """
+    Get an authorization token from ECR, decode it,
+    and use it to authenticate Docker to the ECR registry.
+
+    Returns:
+    - str: The output from the Docker login command.
+    """
     ecr_client = get_ecr_client()
     response = ecr_client.get_authorization_token()
     auth_token = response["authorizationData"][0]["authorizationToken"]
@@ -57,6 +75,18 @@ def authenticate_ecr_to_docker():
 
 
 def build_and_push_docker_image(repository_uri, docker_file_location, image_tag):
+    """
+    Build a Docker image from the specified Dockerfile and push it to the ECR repository.
+
+    Parameters:
+    - repository_uri (str): The URI of the ECR repository.
+    - docker_file_location (str): The file path to the Dockerfile.
+    - image_tag (str): The tag to apply to the Docker image.
+
+    Returns:
+    - str: A message indicating the success or failure of the build and push operations.
+    """
+
     try:
         subprocess.run(
             [
@@ -96,6 +126,14 @@ def build_and_push_docker_image(repository_uri, docker_file_location, image_tag)
 
 
 def delete_untagged_images(repository_name):
+    """
+    Delete all untagged images from the specified ECR repository.
+    Parameters:
+    - repository_name (str): The name of the ECR repository from which to delete untag images.
+
+    Returns:
+    - None
+    """
     ecr_client = get_ecr_client()
     response = ecr_client.list_images(
         repositoryName=repository_name,
@@ -118,6 +156,20 @@ def delete_untagged_images(repository_name):
 
 
 def deploy_docker_image_to_ecr(repository_name, docker_file_location, image_tag):
+    """
+    Deploy a Docker image to ECR by performing the following steps:
+    1. Get the ECR repository URI (create the repository if it doesn't exist).
+    2. Authenticate Docker to the ECR registry.
+    3. Build the Docker image from the specified Dockerfile and push it to the ECR repository.
+    4. Delete any untagged images from the ECR repository.
+
+    Parameters:
+    - repository_name (str): The name of the ECR repository.
+    - docker_file_location (str): The file path to the Dockerfile.
+    - image_tag (str): The tag to apply to the Docker image.
+    Returns:
+    - str: The URI of the pushed Docker image in ECR (including the tag).
+    """
     print("Getting ECR repository URI...")
     repository_uri = get_ecr_repository_uri(repository_name)
     print(f"ECR Repository URI: {repository_uri}")

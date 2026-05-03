@@ -5,17 +5,34 @@ from src.utils.aws_clients import get_secrets_manager_client, get_s3_client
 
 
 def get_api_credentials(secret_name):
+    """
+    Retrieves API credentials from AWS Secrets Manager.
+    It takes the name of the secret as input and returns the credentials as a dictionary.
+    Parameters:
+    - secret_name (str): The name of the secret in AWS Secrets Manager that contains the API credentials.
+    Returns:
+    - dict: A dictionary containing the API credentials retrieved from Secrets Manager, or None if the secret is not found.
+    """
     secrets_manager_client = get_secrets_manager_client()
     try:
         response = secrets_manager_client.get_secret_value(SecretId=secret_name)
-        return json.loads(response['SecretString'])
-    
+        return json.loads(response["SecretString"])
+
     except secrets_manager_client.exceptions.ResourceNotFoundException:
         print(f"Secret '{secret_name}' not found in Secrets Manager.")
-        return None
 
 
 def extract_data_from_api(api_url, secret_name):
+    """
+    Extracts data from an API using credentials stored in AWS Secrets Manager.
+    It retrieves the API credentials from Secrets Manager, makes a GET request to the specified API URL using those credentials,
+    and returns the response.
+    Parameters:
+    - api_url (str): The URL of the API to extract data from.
+    - secret_name (str): The name of the secret in AWS Secrets Manager that contains the API credentials.
+    Returns:
+    - dict: A dictionary containing the status code and either the API response data (if the request is successful) or an error message.
+    """
 
     api_auth_credentials = get_api_credentials(secret_name)
     if api_auth_credentials is None:
@@ -38,6 +55,16 @@ def extract_data_from_api(api_url, secret_name):
 
 
 def load_raw_data_to_s3(bucket_name, api_data, raw_file_name):
+    """
+    Loads raw data to an S3 bucket. It first creates the S3 bucket if it doesn't exist,
+    and then uploads the data as a file to the bucket.
+    Parameters:
+    - bucket_name (str): The name of the S3 bucket to create and upload data to.
+    - api_data (str): The raw data to be uploaded to S3.
+    - raw_file_name (str): The name of the file to be created in S3 for the uploaded data.
+    Returns:
+    - dict: A dictionary containing the status code and a message indicating whether the data upload was successful or not.
+    """
     s3_client = get_s3_client()
 
     create_s3_bucket(s3_client, bucket_name)

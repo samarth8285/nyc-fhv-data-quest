@@ -4,6 +4,11 @@ import src.utils.extraction_config as config
 
 
 def extract_api_data():
+    """
+    Extract data from the API and load it to S3.
+    Returns:
+        dict: A dictionary containing the status code and message of the API data extraction and S3 upload process.
+    """
 
     api_data_response = extract_data_from_api(config.API_URL, config.AWS_SECRET_NAME)
     if api_data_response["Status Code"] != 200:

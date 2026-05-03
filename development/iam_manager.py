@@ -4,6 +4,19 @@ from src.utils.aws_clients import get_iam_client
 
 
 def get_iam_role_arn(role_name):
+    """
+    This function checks if the specified IAM role exists.
+    If it does, it returns the ARN of the existing role.
+    If the role does not exist, it creates a new IAM role with the necessary permissions
+        for Lambda execution and returns its ARN.
+
+    Parameters:
+    - role_name (str): The name of the IAM role to check or create.
+
+    Returns:
+    - dict: A dictionary containing the status code and the ARN of the IAM role.
+
+    """
     iam_client = get_iam_client()
 
     assume_role_policy_document = {
@@ -68,4 +81,4 @@ def get_iam_role_arn(role_name):
     )
     print("Secrets Manager policy attached.")
 
-    return response["Role"]["Arn"]
+    return {"Status Code": 200, "body": response["Role"]["Arn"]}
