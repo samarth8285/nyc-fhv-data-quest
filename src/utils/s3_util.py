@@ -32,7 +32,6 @@ def create_s3_bucket(s3_client, bucket_name):
         print(f"Bucket {bucket_name} created successfully.")
     else:
         print(f"Bucket {bucket_name} already exists.")
-    return
 
 
 def upload_file_to_s3(s3_client, bucket_name, file_name, data, content_type):
