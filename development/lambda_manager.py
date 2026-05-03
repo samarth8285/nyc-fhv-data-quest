@@ -16,13 +16,13 @@ def check_for_lambda_function(lambda_function_name):
     try:
         response = lambda_client.get_function(FunctionName=lambda_function_name)
         return {
-            "Status Code": 200,
+            STATUS_CODE: 200,
             "body": response.get("Configuration").get("FunctionArn"),
         }
 
     except Exception as e:
         return {
-            "Status Code": 500,
+            STATUS_CODE: 500,
             "body": f"No Lambda function found with name {lambda_function_name}: {str(e)}",
         }
 
@@ -54,11 +54,11 @@ def create_lambda_function(lambda_function_name, lambda_execution_role, ecr_imag
             },
         )
         return {
-            "Status Code": 200,
+            STATUS_CODE: 200,
             "body": creation_response.get("FunctionArn"),
         }
     except Exception as e:
-        return {"Status Code": 500, "body": f"Error creating Lambda function: {str(e)}"}
+        return {STATUS_CODE: 500, "body": f"Error creating Lambda function: {str(e)}"}
 
 
 def update_lambda_function(lambda_function_name, ecr_image_uri):
@@ -77,11 +77,11 @@ def update_lambda_function(lambda_function_name, ecr_image_uri):
             ImageUri=ecr_image_uri,
         )
         return {
-            "Status Code": 200,
+            STATUS_CODE: 200,
             "body": update_response.get("FunctionArn"),
         }
     except Exception as e:
-        return {"Status Code": 500, "body": f"Error updating Lambda function: {str(e)}"}
+        return {STATUS_CODE: 500, "body": f"Error updating Lambda function: {str(e)}"}
 
 
 def deploy_lambda_function(lambda_function_name, lambda_execution_role, ecr_image_uri):
