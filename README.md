@@ -2,6 +2,16 @@
 
 This project is designed to extract data from the NYC FHV API, store it in an S3 bucket, and then process it using AWS Lambda functions. The project is structured in a modular format, with separate files for different functionalities such as AWS client creation, data extraction, and data processing. The application is containerized using Docker and deployed to AWS Lambda using ECR repositories.
 
+## Architecture Diagram
+![Architecture Diagram](images/architecture-diagram.png)
+
+## Tools Used
+1. **Python**: The primary programming language used for the application development.
+2. **AWS Services**: S3 for data storage, Lambda for data processing, ECR for container registry, IAM for role management, EventBridge for scheduling, and Secrets Manager for secure storage of API credentials.
+3. **Docker**: Used for containerizing the application to ensure consistency across different environments.
+4. **SonarQube**: Used for code quality analysis and security vulnerability detection.
+5. **GitHub Actions**: Used for continuous integration and deployment of the application.
+
 ## Permissions and Commands to run the application:
 1. To manually build the infrastructure in the AWS account, run the following command in the terminal:
 
