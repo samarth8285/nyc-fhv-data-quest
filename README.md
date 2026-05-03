@@ -3,14 +3,14 @@
 This project is designed to extract data from the NYC FHV API, store it in an S3 bucket, and then process it using AWS Lambda functions. The project is structured in a modular format, with separate files for different functionalities such as AWS client creation, data extraction, and data processing. The application is containerized using Docker and deployed to AWS Lambda using ECR repositories.
 
 ## Permissions and Commands to run the application:
-1. To build the infrastructure in the AWS account, run the following command in the terminal:
+1. To manually build the infrastructure in the AWS account, run the following command in the terminal:
 
     ```
     pip install -r requirements.txt
     py -B -m development.deploy
     ```
 
-2. To run the application the user will be requiring the following permissions in the AWS account:
+2. To run the application and build the infrastructure, the user will be requiring the following permissions in the AWS account:
     - Permissions to create and manage Lambda functions.
     - Permissions to create and manage ECR repositories and images.
     - Permissions to create and manage IAM roles and policies.
@@ -21,6 +21,16 @@ This project is designed to extract data from the NYC FHV API, store it in an S3
 
 3. Replace the values inside the config files with the appropriate values for your AWS account and API credentials before running the application.
 
+4. Every time the changes are made to the codebase, sonarqube will be triggered to analyze the code quality and security vulnerabilities. Make sure to fix any issues reported by sonarqube before deploying the application. And once it is passed it will be automatically setup the infrastructure and deploy the application to AWS Lambda.
+
+5. Secrets that will be required to be created in the Github Secrets for the application to work properly:
+    - `AWS_ACCESS_KEY_ID`: Your AWS access key ID.
+    - `AWS_SECRET_ACCESS_KEY`: Your AWS secret access key.
+    - `SONAR_TOKEN`: Your SonarQube token for code analysis.
+
 ## Documentations
 1. [AWS SDK for Python (Boto3)](https://docs.aws.amazon.com/boto3/latest/)
 2. [NYC FHV Documentation](https://data.cityofnewyork.us/Transportation/For-Hire-Vehicles-FHV-Active/8wbx-tsch/about_data)
+3. [Github Actions Documentation](https://docs.github.com/en/actions)
+4. [SonarQube Documentation](https://docs.sonarqube.org/latest/)
+5. [Docker Documentation](https://docs.docker.com/)

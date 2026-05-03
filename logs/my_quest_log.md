@@ -61,6 +61,7 @@
 > 2. Created a function to perform all the necessary steps to create an ECR repository and push the docker image to it.
 
 > Actions on 28th April 2026
+>
 > 1. Created lambda manager file to create and deploy lambda function using the docker image in ECR repository.
 > 2. Created a function to check if the lambda function already exists before creating it to avoid any errors.
 > 3. Tested the lambda manager functions to ensure that the lambda function is successfully created and deployed using the docker image in ECR repository.
@@ -70,7 +71,7 @@
 >
 > 1. Tested the lambda function by triggering it manually to ensure that the data extraction and upload process works correctly when the lambda function is executed.
 > 2. Created a module to deploy the infrastructure of AWS services.
-> 3. Updated docker ignore file to ignore the pycache files and __pycache__ folders to reduce the size of the docker image.
+> 3. Updated docker ignore file to ignore the pycache files and **pycache** folders to reduce the size of the docker image.
 > 4. Added permissions to the IAM role for lambda function to allow it to access the necessary AWS services for the data extraction and upload process.
 > 5. Converted the config files to python files to avoid any issues with reading the config values in the lambda function when it is deployed.
 
@@ -79,3 +80,10 @@
 > 1. Created a function module to create event bridge rule to trigger the lambda function on a schedule.
 > 2. Updated the deploy module to call the function to create event bridge rule after creating and deploying the lambda function.
 > 3. Tested the event bridge rule to ensure that it successfully triggers the lambda function on the defined schedule.
+
+> Actions on 3rd May 2026
+>
+> 1. Added documentation to the code files to explain the functionality of each function and the overall process of the application.
+> 2. Added github actions workflow file to automate the code analysis using sonarqube and deployment of the application to AWS Lambda when changes are made to the codebase.
+> 3. Tested the github actions workflow to ensure that it successfully analyzes the code using sonarqube and deploys the application to AWS Lambda when changes are made to the codebase.
+> 4. Updated the README file to include the necessary permissions and commands to run the application, as well as the documentation links for the technologies used in the project.
