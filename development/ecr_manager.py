@@ -152,7 +152,6 @@ def delete_untagged_images(repository_name):
     print(
         f"Deleted {len(untagged_images)} untagged images from ECR repository '{repository_name}'."
     )
-    return
 
 
 def deploy_docker_image_to_ecr(repository_name, docker_file_location, image_tag):
